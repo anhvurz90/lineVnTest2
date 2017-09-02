@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="../../css/app.css" />
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <table id="users" class="display" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>UserName</th>
+          <th>Location</th>
+          <th>Total Chat</th>
+          <th>Latest Chat Title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="user: ${users}">
+          <td th:text="${user.getUserName()}" />
+          <td th:text="${user.getLocation().getName()}" />
+          <td th:text="${user.getCountChat()}"></td>
+          <td th:if="${user.getLatestChat() != null}" th:text="${user.getLatestChat().getTitle()}"></td>
+          <td th:unless="${user.getLatestChat() != null}"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" />
+<script src="../../js/app.js"></script>
+</body>
+</html>
