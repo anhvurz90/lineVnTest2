@@ -2,7 +2,11 @@ package com.ait.interview.services;
 
 import com.ait.interview.domain.Location;
 import com.ait.interview.repositories.LocationRepository;
+
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Component;
 
 @Component("loationService")
@@ -24,9 +28,8 @@ public class LocationServiceImpl implements LocationService {
   }
 
   @Override
-  public List<Location> getAllLocationByArea(int area) {
-
-    return this.locationRepository.findAllByArea(area);
+  public List<Location> getAllLocationByArea(int area, Pageable pageable) {
+    return this.locationRepository.findAllByArea(area, pageable);
   }
 
   @Override
@@ -35,7 +38,17 @@ public class LocationServiceImpl implements LocationService {
   }
 
   @Override
-  public List<Location> getListAllIgnoreRootArea() {
-    return this.locationRepository.findAllByAreaNotAndParentIdIsNot(0, 1L);
+  public List<Location> getListAllIgnoreRootArea(Pageable pageable) {
+    return locationRepository.findAllByAreaNotAndParentIdIsNot(0, 1L, pageable);
+  }
+  
+  @Override
+  public int countListAllIgnoreRootArea() {
+    return locationRepository.countByAreaNotAndParentIdIsNot(0, 1L);
+  }
+  
+  @Override
+  public int countAllLocationByArea(int area) {
+      return locationRepository.countByArea(area);
   }
 }

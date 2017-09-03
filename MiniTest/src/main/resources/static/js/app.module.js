@@ -4,6 +4,6 @@
     angular
         .module('interview', [
             'ngResource',
-            'bw.paging'
+            'ngTable'
         ]).run();
 })();

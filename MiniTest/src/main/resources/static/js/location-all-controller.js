@@ -5,9 +5,9 @@
         .module('interview')
         .controller('LocationAllController', LocationAllController);
 
-    LocationAllController.$inject = ['$scope', '$http'];
+    LocationAllController.$inject = ['$scope', '$http', '$resource', '$window', 'NgTableParams'];
 
-    function LocationAllController ($scope, $http) {
+    function LocationAllController ($scope, $http, $resource, $window, NgTableParams) {
         var vm = this;
         console.log("LocationAllController");
 
@@ -15,12 +15,8 @@
         vm.areas = [];
         vm.isSearching = false;
         vm.search = search;
-//        vm.loadPage = loadPage;
-//        vm.predicate = pagingParams.predicate;
-//        vm.reverse = pagingParams.ascending;
-//        vm.transition = transition;
-//        vm.itemsPerPage = paginationConstants.itemsPerPage;
-//
+        vm.showLocation = showLocation;
+
         loadAllAreas();
         function loadAllAreas() {
             $http({
@@ -37,34 +33,39 @@
         
         function search() {
             vm.locations = [];
-            //$("#btn_search").prop('disabled', true);
             vm.isSearching = true;
-            //$("#txt_search").text(' In Progess');
-            //$("#fa_spinner").removeClass("hidden");
-            $http({
-                method: 'GET',
-                url: "/location/ajax?area=" + vm.selectedArea.id
-            }).then(
-              function successCallback(response) {
-                  vm.locations=response.data;
+            
+            var Api = $resource("/location/ajax?area=" + vm.selectedArea.id);
+            this.tableParams = new NgTableParams({
+              page: 1, // show first page
+              count: 10 // count per page
+            }, {
+              filterDelay: 300,
+              getData: function(params) {
+                // ajax request to api
+                return Api.get(params.url()).$promise.then(function(data) {
+                  params.total(data.count);
                   vm.isSearching = false;
-              }, function errorCallback(response) {
-                alert("Can not fetch locations!!!");
-                vm.isSearching = false;
-              });
+                  return data.results;
+                });
+              }
+            });
+            
+//            $http({
+//                method: 'GET',
+//                url: "/location/ajax?area=" + vm.selectedArea.id
+//            }).then(
+//              function successCallback(response) {
+//                  vm.locations=response.data;
+//                  vm.isSearching = false;
+//              }, function errorCallback(response) {
+//                alert("Can not fetch locations!!!");
+//                vm.isSearching = false;
+//              });
         }
 
-//        function loadPage(page) {
-//            vm.page = page;
-//            vm.transition();
-//        }
-//
-//        function transition() {
-//            $state.transitionTo($state.$current, {
-//                page: vm.page,
-//                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-//                search: vm.currentSearch
-//            });
-//        }
+        function showLocation(locationId) {
+            $window.location.href = '/location/detail?id=' + locationId;
+        }
     }
 })();

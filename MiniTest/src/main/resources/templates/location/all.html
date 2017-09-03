@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css"/>
+  <link rel="stylesheet" href="../../bower_components/ng-table/dist/ng-table.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="../../css/app.css" />
   
@@ -12,7 +13,7 @@
   <script src="../../bower_components/json3/lib/json3.js"></script>
   <script src="../../bower_components/angular/angular.js"></script>
   <script src="../../bower_components/angular-resource/angular-resource.js"></script>
-  <script src="../../bower_components/angular-paging/dist/paging.js"></script>
+  <script src="../../bower_components/ng-table/dist/ng-table.js"></script>
   <script src="../../js/app.module.js"></script>
   <script src="../../js/location-all-controller.js"></script>
 </head>
@@ -36,7 +37,14 @@
   </div>
   <h4>Areas</h4>
   <div class="row" id="areas">
-    {{vm.locations}}
+     <table ng-table="vm.tableParams" show-filter="false" class="table table-bordered table-striped">
+      <tr ng-repeat="row in $data track by row.id">
+        <td title="'Id'" filter="{id: 'text'}">{{row.id}}</td>
+        <td title="'Name'" filter="{name: 'text'}">
+          <a ng-click="vm.showLocation(row.id)">{{row.name}}</a>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 </body>

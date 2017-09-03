@@ -5,7 +5,13 @@ import com.ait.interview.domain.UserLocation;
 import com.ait.interview.services.ChatService;
 import com.ait.interview.services.LocationService;
 import com.ait.interview.services.UserService;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,11 +47,25 @@ public class LocationController {
   
   @GetMapping("/ajax")
   @ResponseBody
-  public List<Location> ajax(@RequestParam(name = "area") int area) {
+  public Map<String, Object> ajax(@RequestParam(name = "area") int area,
+                                  @RequestParam(name = "page") int page,
+                                  @RequestParam(name = "count") int size) {
     if (area == 0) {
-      return this.locationService.getListAllIgnoreRootArea();
+      int count = locationService.countListAllIgnoreRootArea();
+      Pageable pageable = new PageRequest(page-1, size);
+      List<Location> results = locationService.getListAllIgnoreRootArea(pageable);
+      Map<String, Object> ret = new HashMap<>();
+      ret.put("count", count);
+      ret.put("results", results);
+      return ret;
     } else {
-      return this.locationService.getAllLocationByArea(area);
+      int count = locationService.countAllLocationByArea(area);
+      Pageable pageable = new PageRequest(page-1, size);
+      List<Location> results = locationService.getAllLocationByArea(area, pageable);
+      Map<String, Object> ret = new HashMap<>();
+      ret.put("count", count);
+      ret.put("results", results);
+      return ret;
     }
   }
 
