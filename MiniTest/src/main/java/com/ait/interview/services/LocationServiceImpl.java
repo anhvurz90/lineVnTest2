@@ -4,7 +4,6 @@ import com.ait.interview.domain.Location;
 import com.ait.interview.repositories.LocationRepository;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import sun.jvm.hotspot.utilities.Assert;
 
 @Component("loationService")
 public class LocationServiceImpl implements LocationService {
