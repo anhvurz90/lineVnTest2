@@ -19,21 +19,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LocationController {
 
   @Autowired
-  LocationService locationService;
+  private LocationService locationService;
 
   @Autowired
-  UserService userService;
+  private UserService userService;
 
   @Autowired
-  ChatService chatService;
+  private ChatService chatService;
 
   @GetMapping("/")
   public String index(Model model) {
-    List<Location> areas = this.locationService.getListArea();
-    model.addAttribute("areas", areas);
     return "location/all";
   }
 
+  @GetMapping("/areas")
+  @ResponseBody
+  public List<Location> areas() {
+    return locationService.getListArea();
+  }
+
+  
   @GetMapping("/ajax")
   @ResponseBody
   public List<Location> ajax(@RequestParam(name = "area") int area) {
@@ -42,7 +47,6 @@ public class LocationController {
     } else {
       return this.locationService.getAllLocationByArea(area);
     }
-
   }
 
   @GetMapping("/detail")

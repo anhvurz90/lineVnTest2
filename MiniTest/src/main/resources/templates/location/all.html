@@ -4,36 +4,40 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" href="../../css/app.css" />
+  
+  <script src="../../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../../bower_components/json3/lib/json3.js"></script>
+  <script src="../../bower_components/angular/angular.js"></script>
+  <script src="../../bower_components/angular-resource/angular-resource.js"></script>
+  <script src="../../bower_components/angular-paging/dist/paging.js"></script>
+  <script src="../../js/app.module.js"></script>
+  <script src="../../js/location-all-controller.js"></script>
 </head>
-<body>
-<div class="container">
+<body ng-app="interview">
+<div class="container" ng-controller="LocationAllController">
   <div class="row">
     <form class="form-inline">
       <div class="form-group">
         <label for="area">Area</label>
-        <select class="form-control" id="area">
-          <option th:value="0">All</option>
-          <option th:each="area : ${areas}" th:value="${area.getId()}" th:text="${area.getName()}"/>
+        <select class="form-control" id="area" 
+                ng-options="item as item.name for item in vm.areas track by item.id" 
+                ng-model="vm.selectedArea">
         </select>
       </div>
-      <button type="button" id="btn_search" class="btn btn-default">
-        <i class="fa fa-spinner fa-spin hidden" id="fa_spinner"></i>
-        <span class="pl-1" id="txt_search">Search</span>
+      <button type="button" id="btn_search" class="btn btn-default" 
+              ng-click="vm.search()" ng-disable="vm.isSearching">
+        <i class="fa fa-spinner fa-spin" id="fa_spinner" ng-show="vm.isSearching"></i>
+        <span class="pl-1" id="txt_search">{{vm.isSearching ? "In Progess":"Search"}}</span>
       </button>
     </form>
   </div>
   <h4>Areas</h4>
   <div class="row" id="areas">
-
+    {{vm.locations}}
   </div>
 </div>
-<script src="http://code.jquery.com/jquery-3.2.1.min.js" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" />
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" />
-<script src="../../js/app.js"></script>
 </body>
 </html>
