@@ -28,11 +28,11 @@
   <div class="row">
    <table ng-table="vm.tableParams" show-filter="false" class="table table-bordered table-striped">
       <tr ng-repeat="row in $data track by row.userId"
-          ng-show="!vm.searchPattern || (row.userName + row.location.name + row.countChat + row.latestChat.title).indexOf(vm.searchPattern) != -1">
+          ng-show="!vm.searchPattern || (row.userName + row.location + row.countChat + row.latestChat).indexOf(vm.searchPattern) != -1">
         <td title="'User Name'" sortable="'userName'" filter="{userName: 'text'}">{{row.userName}}</td>
-        <td title="'Location'" sortable="'location'" filter="{locationName: 'text'}">{{row.location.name}}</td>
-        <td title="'Total Chat'" sortable="'countChat'" filter="{countChat: 'text'}">{{row.countChat}}</td>
-        <td title="'Latest Chat Title'" sortable="'latestChat'" filter="{latestChat: 'text'}">{{row.latestChat.title}}</td>
+        <td title="'Location'" sortable="'location'" filter="{locationName: 'text'}">{{row.location}}</td>
+        <td title="'Total Chat'" sortable="'totalChat'" filter="{totalChat: 'text'}">{{row.countChat}}</td>
+        <td title="'Latest Chat Title'" sortable="'latestChat'" filter="{latestChat: 'text'}">{{row.latestChat}}</td>
       </tr>
     </table>
   </div>

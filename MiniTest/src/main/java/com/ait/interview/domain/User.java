@@ -1,6 +1,7 @@
 package com.ait.interview.domain;
 
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import org.hibernate.annotations.NaturalId;
 
 @Entity
 public class User {
@@ -33,6 +32,12 @@ public class User {
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
   private Set<Chat> chats;
+  
+  @Column
+  private Integer totalChat;
+  
+  @Column
+  private String latestChat;
 
   protected User() {
 
@@ -67,4 +72,13 @@ public class User {
   public Set<Chat> getChats() {
     return chats;
   }
+
+  public Integer getTotalChat() {
+    return totalChat;
+  }
+
+  public String getLatestChat() {
+    return latestChat;
+  }
+  
 }
