@@ -71,16 +71,25 @@ public class LocationController {
 
   @GetMapping("/detail")
   public String detail(Model model, @RequestParam(name = "id") Long id) {
-    Location location = this.locationService.getById(id);
+    return "location/detail";
+  }
+  
+  @GetMapping("/users")
+  @ResponseBody
+  public Map<String, Object> users(@RequestParam(name = "id") Long locationId,
+                                   @RequestParam(name = "page") int page,
+                                   @RequestParam(name = "count") int size) {
+    Location location = this.locationService.getById(locationId);
     Location parent = this.locationService.getById(location.getId());
     List<UserLocation> users = this.userService.getUsersInLocation(location.getId());
-    model.addAttribute("location", location);
-    model.addAttribute("parent", parent);
-    model.addAttribute("users", users);
     users.forEach(user -> {
       user.setCountChat(this.chatService.count(user.getUserId()));
       user.setLatestChat(this.chatService.getLatestChat(user.getUserId()));
     });
-    return "location/detail";
+    
+    Map<String, Object> ret = new HashMap<>();
+    ret.put("count", users.size());
+    ret.put("results", users.subList((page-1)*size, page*size));
+    return ret;
   }
 }
