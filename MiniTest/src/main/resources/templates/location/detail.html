@@ -20,12 +20,19 @@
 <body ng-app="interview">
 <div class="container" ng-controller="LocationDetailController">
   <div class="row">
+    <form class="pull-right">
+        <label>Search:</label>
+        <input type="search" ng-model="vm.searchPattern"/>
+    </form>
+  </div>
+  <div class="row">
    <table ng-table="vm.tableParams" show-filter="false" class="table table-bordered table-striped">
-      <tr ng-repeat="row in $data track by row.userId">
-        <td title="'User Name'" filter="{userName: 'text'}">{{row.userName}}</td>
-        <td title="'Location'" filter="{locationName: 'text'}">{{row.location.name}}</td>
-        <td title="'Total Chat'" filter="{countChat: 'text'}">{{row.countChat}}</td>
-        <td title="'Latest Chat Title'" filter="{latestChat: 'text'}">{{row.latestChat.title}}</td>
+      <tr ng-repeat="row in $data track by row.userId"
+          ng-show="!vm.searchPattern || (row.userName + row.location.name + row.countChat + row.latestChat.title).indexOf(vm.searchPattern) != -1">
+        <td title="'User Name'" sortable="'userName'" filter="{userName: 'text'}">{{row.userName}}</td>
+        <td title="'Location'" sortable="'location'" filter="{locationName: 'text'}">{{row.location.name}}</td>
+        <td title="'Total Chat'" sortable="'countChat'" filter="{countChat: 'text'}">{{row.countChat}}</td>
+        <td title="'Latest Chat Title'" sortable="'latestChat'" filter="{latestChat: 'text'}">{{row.latestChat.title}}</td>
       </tr>
     </table>
   </div>

@@ -2,7 +2,11 @@ package com.ait.interview.repositories;
 
 import com.ait.interview.domain.User;
 import com.ait.interview.domain.UserLocation;
+
 import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
@@ -12,9 +16,12 @@ public interface UserRepository extends Repository<User, Long> {
   @Query(value = "select u.id as userId, u.username as userName, u.location as location from User u "
       + "inner join u.location l "
       + "where  u.active in (1, 2) and (l.id = ?1 or l.parentId = ?1) "
-      + "and l.parentId <> 1"
-      + "group by u.id "
-      + "order by l.id DESC")
-  List<UserLocation> customUsersInLocation(Long locationId);
+      + "and l.parentId <> 1")
+  List<UserLocation> customUsersInLocation(Long locationId, Pageable pageable);
   User findById(Long id);
+
+  @Query(value = "select count(*) from  User u "
+          + "where  u.active in (1, 2) and (u.location.id = ?1 or u.location.parentId = ?1) "
+          + "and u.location.parentId <> 1")
+  int countUsersInLocation(long locationId);
 }
