@@ -89,10 +89,6 @@ public class LocationController {
     Location parent = this.locationService.getById(location.getId());
     int count = userService.countUsersInLocation(locationId);
     List<UserLocation> users = this.userService.getUsersInLocation(location.getId(), pageable);
-//    users.forEach(user -> {
-//      user.setCountChat(this.chatService.count(user.getUserId()));
-//      user.setLatestChat(this.chatService.getLatestChat(user.getUserId()));
-//    });
     
     Map<String, Object> ret = new HashMap<>();
     ret.put("count", count);

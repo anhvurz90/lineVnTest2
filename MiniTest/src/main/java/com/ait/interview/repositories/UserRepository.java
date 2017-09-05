@@ -5,8 +5,9 @@ import com.ait.interview.domain.UserLocation;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
+import org.springframework.cache.annotation.Cacheable;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
