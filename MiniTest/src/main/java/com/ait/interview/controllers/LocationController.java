@@ -84,11 +84,12 @@ public class LocationController {
 //      @RequestParam(name = "page") int page,
 //      @RequestParam(name = "count") int size
     long locationId = Long.parseLong(params.get("id"));
+    String searchPattern = params.containsKey("searchPattern")? params.get("searchPattern"): "";
     Pageable pageable = buildPageable(params);
     Location location = this.locationService.getById(locationId);
     Location parent = this.locationService.getById(location.getId());
-    int count = userService.countUsersInLocation(locationId);
-    List<UserLocation> users = this.userService.getUsersInLocation(location.getId(), pageable);
+    int count = userService.countUsersInLocation(locationId, searchPattern);
+    List<UserLocation> users = this.userService.getUsersInLocation(location.getId(), searchPattern, pageable);
     
     Map<String, Object> ret = new HashMap<>();
     ret.put("count", count);

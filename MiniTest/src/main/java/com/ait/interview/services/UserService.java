@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
   List<User> getUsersByLocation(Long locationId);
-  List<UserLocation> getUsersInLocation(Long locationId, Pageable pageable);
+  List<UserLocation> getUsersInLocation(Long locationId, String searchPattern, Pageable pageable);
   User getById(Long id);
-  int countUsersInLocation(long locationId);
+  int countUsersInLocation(long locationId, String searchPattern);
 }

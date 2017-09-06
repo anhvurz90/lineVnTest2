@@ -15,8 +15,13 @@
         vm.locationId = $location.search().id;
         vm.users = [];
         
-        initUserTable();
+        vm.search = search;
 
+        initUserTable();
+        
+        function search() {
+            vm.tableParams.reload();
+        }
         function initUserTable() {
             vm.users = [];
             
@@ -28,7 +33,9 @@
               filterDelay: 300,
               getData: function(params) {
                 // ajax request to api
-                return Api.get(params.url()).$promise.then(function(data) {
+                var jsonParams = params.url();
+                jsonParams['searchPattern'] = vm.searchPattern;
+                return Api.get(jsonParams).$promise.then(function(data) {
                   params.total(data.count);
                   return data.results;
                 });

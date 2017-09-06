@@ -22,13 +22,13 @@
   <div class="row">
     <form class="pull-right">
         <label>Search:</label>
-        <input type="search" ng-model="vm.searchPattern"/>
+        <input type="text" placeholder="...search..." ng-model="vm.searchPattern" ng-change="vm.search()"/>
     </form>
   </div>
   <div class="row">
    <table ng-table="vm.tableParams" show-filter="false" class="table table-bordered table-striped">
-      <tr ng-repeat="row in $data track by row.userId"
-          ng-show="!vm.searchPattern || (row.userName + row.location + row.countChat + row.latestChat).indexOf(vm.searchPattern) != -1">
+      <tr ng-repeat="row in $data track by row.userId">
+          <!--ng-show="!vm.searchPattern || (row.userName + row.location + row.countChat + row.latestChat).indexOf(vm.searchPattern) != -1"-->
         <td title="'User Name'" sortable="'userName'" filter="{userName: 'text'}">{{row.userName}}</td>
         <td title="'Location'" sortable="'location'" filter="{locationName: 'text'}">{{row.location}}</td>
         <td title="'Total Chat'" sortable="'totalChat'" filter="{totalChat: 'text'}">{{row.countChat}}</td>
