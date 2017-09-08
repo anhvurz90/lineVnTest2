@@ -8,3 +8,6 @@ CREATE INDEX idx_user_l_chat ON user(latest_chat);
 
 CREATE INDEX idx_loc_parent_id ON location(parent_id);
 CREATE INDEX idx_loc_name ON location(name);
+
+ALTER TABLE user ADD FULLTEXT INDEX fulltext_index(username, latest_chat);
+ALTER TABLE location ADD FULLTEXT INDEX ftid_location_name(name);
