@@ -15,16 +15,6 @@
            transactionalMode="off">
     </cache>
     
-    <cache name="countUsersInLocation"
-           maxElementsInMemory="1000"
-           eternal="false"
-           overflowToDisk="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="0"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-    </cache>
-    
     <cache name="getListArea"
            maxElementsInMemory="1000"
            eternal="false"
@@ -35,27 +25,7 @@
            transactionalMode="off">
     </cache>
     
-    <cache name="countListAllIgnoreRootArea"
-           maxElementsInMemory="1000"
-           eternal="false"
-           overflowToDisk="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="0"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-    </cache>
-    
     <cache name="getListAllIgnoreRootArea"
-           maxElementsInMemory="1000"
-           eternal="false"
-           overflowToDisk="false"
-           timeToLiveSeconds="60"
-           timeToIdleSeconds="0"
-           memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
-    </cache>
-    
-    <cache name="countAllLocationByArea"
            maxElementsInMemory="1000"
            eternal="false"
            overflowToDisk="false"

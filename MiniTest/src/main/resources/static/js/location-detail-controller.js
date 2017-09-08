@@ -36,8 +36,8 @@
                 var jsonParams = params.url();
                 jsonParams['searchPattern'] = vm.searchPattern;
                 return Api.get(jsonParams).$promise.then(function(data) {
-                  params.total(data.count);
-                  return data.results;
+                  params.total(data.totalElements);
+                  return data.content;
                 });
               }
             });

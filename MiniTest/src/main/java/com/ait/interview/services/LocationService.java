@@ -4,6 +4,7 @@ import com.ait.interview.domain.Location;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface LocationService {
@@ -11,9 +12,7 @@ public interface LocationService {
   List<Location> getAll();
   List<Location> getListArea();
 
-  int countListAllIgnoreRootArea();
-  List<Location> getListAllIgnoreRootArea(Pageable pageable);
+  Page<Location> getListAllIgnoreRootArea(Pageable pageable);
   
-  int countAllLocationByArea(int area);
-  List<Location> getAllLocationByArea(int area, Pageable pageable);
+  Page<Location> getAllLocationByArea(int area, Pageable pageable);
 }

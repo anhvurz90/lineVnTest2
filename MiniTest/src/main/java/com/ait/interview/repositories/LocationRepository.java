@@ -5,6 +5,7 @@ import com.ait.interview.domain.LocationCustom;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.jpa.repository.Query;
@@ -14,15 +15,12 @@ public interface LocationRepository extends Repository<Location, Long> {
   List<Location> findAll();
   List<Location> findByParentId(Long parentId);
   
-  List<Location> findAllByAreaNotAndParentIdIsNot(int area, Long parentId, Pageable pageable);
+  Page<Location> findAllByAreaNotAndParentIdIsNot(int area, Long parentId, Pageable pageable);
   
-  //@Query(select count(*) from Location where )
-  Integer countByAreaNotAndParentIdIsNot(int area, Long parentId);
   Location findById(Long id);
 
   @Query("select id, name from Location ")
   List<LocationCustom> custom();
   
-  Integer countByAreaAndParentIdIsNot(int area, Long parentId);
-  List<Location> findAllByAreaAndParentIdIsNot(int area, Long parentId, Pageable pageable);
+  Page<Location> findAllByAreaAndParentIdIsNot(int area, Long parentId, Pageable pageable);
 }

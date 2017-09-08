@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Sort;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,25 +50,17 @@ public class LocationController {
   
   @GetMapping("/ajax")
   @ResponseBody
-  public Map<String, Object> ajax(@RequestParam(name = "area") int area,
+  public Page<Location> ajax(@RequestParam(name = "area") int area,
                                   @RequestParam(name = "page") int page,
                                   @RequestParam(name = "count") int size) {
     if (area == 0) {
-      int count = locationService.countListAllIgnoreRootArea();
       Pageable pageable = new PageRequest(page-1, size);
-      List<Location> results = locationService.getListAllIgnoreRootArea(pageable);
-      Map<String, Object> ret = new HashMap<>();
-      ret.put("count", count);
-      ret.put("results", results);
-      return ret;
+      Page<Location> pageResult = locationService.getListAllIgnoreRootArea(pageable);
+      return pageResult;
     } else {
-      int count = locationService.countAllLocationByArea(area);
       Pageable pageable = new PageRequest(page-1, size);
-      List<Location> results = locationService.getAllLocationByArea(area, pageable);
-      Map<String, Object> ret = new HashMap<>();
-      ret.put("count", count);
-      ret.put("results", results);
-      return ret;
+      Page<Location> pageResult = locationService.getAllLocationByArea(area, pageable);
+      return pageResult;
     }
   }
 
@@ -79,7 +71,7 @@ public class LocationController {
   
   @GetMapping("/users")
   @ResponseBody
-  public Map<String, Object> users(@RequestParam Map<String, String> params) {
+  public Page<UserLocation> users(@RequestParam Map<String, String> params) {
 //      @RequestParam(name = "id") Long locationId,
 //      @RequestParam(name = "page") int page,
 //      @RequestParam(name = "count") int size
@@ -88,13 +80,15 @@ public class LocationController {
     Pageable pageable = buildPageable(params);
     Location location = this.locationService.getById(locationId);
     Location parent = this.locationService.getById(location.getId());
-    int count = userService.countUsersInLocation(locationId, searchPattern);
-    List<UserLocation> users = this.userService.getUsersInLocation(location.getId(), searchPattern, pageable);
     
-    Map<String, Object> ret = new HashMap<>();
-    ret.put("count", count);
-    ret.put("results", users);
-    return ret;
+    //int count = userService.countUsersInLocation(locationId, searchPattern);
+    Page<UserLocation> users = userService.getUsersInLocation(location.getId(), searchPattern, pageable);
+    return users;
+    
+//    Map<String, Object> ret = new HashMap<>();
+//    ret.put("count", count);
+//    ret.put("results", users);
+//    return ret;
   }
 
   private Pageable buildPageable(Map<String, String> params) {

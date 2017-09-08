@@ -44,9 +44,9 @@
               getData: function(params) {
                 // ajax request to api
                 return Api.get(params.url()).$promise.then(function(data) {
-                  params.total(data.count);
+                  params.total(data.totalElements);
                   vm.isSearching = false;
-                  return data.results;
+                  return data.content;
                 });
               }
             });

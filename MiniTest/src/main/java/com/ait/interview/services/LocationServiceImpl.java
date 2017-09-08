@@ -6,7 +6,7 @@ import com.ait.interview.repositories.LocationRepository;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -31,7 +31,7 @@ public class LocationServiceImpl implements LocationService {
 
   @Override
   @Cacheable("getAllLocationByArea")
-  public List<Location> getAllLocationByArea(int area, Pageable pageable) {
+  public Page<Location> getAllLocationByArea(int area, Pageable pageable) {
     return this.locationRepository.findAllByAreaAndParentIdIsNot(area, 1L, pageable);
   }
 
@@ -43,19 +43,8 @@ public class LocationServiceImpl implements LocationService {
 
   @Override
   @Cacheable("getListAllIgnoreRootArea")
-  public List<Location> getListAllIgnoreRootArea(Pageable pageable) {
+  public Page<Location> getListAllIgnoreRootArea(Pageable pageable) {
     return locationRepository.findAllByAreaNotAndParentIdIsNot(0, 1L, pageable);
   }
   
-  @Override
-  @Cacheable("countListAllIgnoreRootArea")
-  public int countListAllIgnoreRootArea() {
-    return locationRepository.countByAreaNotAndParentIdIsNot(0, 1L);
-  }
-  
-  @Override
-  @Cacheable("countAllLocationByArea")
-  public int countAllLocationByArea(int area) {
-      return locationRepository.countByAreaAndParentIdIsNot(area, 1L);
-  }
 }

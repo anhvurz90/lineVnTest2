@@ -7,6 +7,7 @@ import com.ait.interview.repositories.UserRepository;
 import java.util.List;
 
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -24,17 +25,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Cacheable("customUsersInLocation")
-  public List<UserLocation> getUsersInLocation(Long locationId, String searchPattern, Pageable pageable) {
+  public Page<UserLocation> getUsersInLocation(Long locationId, String searchPattern, Pageable pageable) {
     return this.userRepository.customUsersInLocation(locationId, searchPattern, pageable);
   }
 
   @Override
   public User getById(Long id) {
     return this.userRepository.findById(id);
-  }
-  @Override
-  @Cacheable("countUsersInLocation")
-  public int countUsersInLocation(long locationId, String searchPattern) {
-    return userRepository.countUsersInLocation(locationId, searchPattern);
   }
 }
