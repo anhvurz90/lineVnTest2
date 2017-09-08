@@ -23,6 +23,6 @@ public interface LocationRepository extends Repository<Location, Long> {
   @Query("select id, name from Location ")
   List<LocationCustom> custom();
   
-  Integer countByArea(int area);
-  List<Location> findAllByArea(int area, Pageable pageable);
+  Integer countByAreaAndParentIdIsNot(int area, Long parentId);
+  List<Location> findAllByAreaAndParentIdIsNot(int area, Long parentId, Pageable pageable);
 }

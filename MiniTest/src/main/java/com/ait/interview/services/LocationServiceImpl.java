@@ -32,7 +32,7 @@ public class LocationServiceImpl implements LocationService {
   @Override
   @Cacheable("getAllLocationByArea")
   public List<Location> getAllLocationByArea(int area, Pageable pageable) {
-    return this.locationRepository.findAllByArea(area, pageable);
+    return this.locationRepository.findAllByAreaAndParentIdIsNot(area, 1L, pageable);
   }
 
   @Override
@@ -56,6 +56,6 @@ public class LocationServiceImpl implements LocationService {
   @Override
   @Cacheable("countAllLocationByArea")
   public int countAllLocationByArea(int area) {
-      return locationRepository.countByArea(area);
+      return locationRepository.countByAreaAndParentIdIsNot(area, 1L);
   }
 }
