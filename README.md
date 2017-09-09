@@ -1,6 +1,6 @@
 # lineVnTest2
 
-A.Requirement: improve code & DB, focus on 2 pages [/location/] v‡ [/location/detail]. 
+A.Requirement: improve code & DB, focus on 2 pages [/location/] v√† [/location/detail]. 
 
   1.List issues of the system: performance, error, exception etc.
   2.Update/add code to resolve these issues.
@@ -17,9 +17,11 @@ B.Implementation:
   II.Run app:
     
     1.git clone https://github.com/anhvurz90/lineVnTest2.git
-    2.lineVnTest2/MiniTest
-    3.bower install
-    4.mvn spring-boot:run
+    2.cd lineVnTest2/MiniTest
+    3.run the statements in "db/interview.sql"
+    4.run the statements in "src/main/resources/updateDb.sql"
+    5.bower install
+    6.mvn spring-boot:run
     
   III.Bugs & performance issues that I found and resolved:
     
