@@ -44,4 +44,6 @@ B.Implementation:
     11.In UserRepository.java, in the query there is no need for "group by"
 
   IV.Non-bug issue:
+  
     1.There is not unitest nor intergration test. This is not a bug, just the lack of stability. Also it is not required in the task description, so I just mention here without any coding.
+    2.It is better to use DTO for service & web layers, but only Entity.
